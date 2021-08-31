@@ -1,6 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\PublicController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,12 +18,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [PublicController::class, 'index']);
 
-Route::get('/dashboard', function () {
+Route::get('/dashboard', function() {
     return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+})
+     ->middleware(['auth'])
+     ->name('dashboard');
 
-require __DIR__.'/auth.php';
+Route::resource('employees', EmployeeController::class);
+Route::resource('clients', ClientController::class);
+Route::resource('orders', OrderController::class);
+Route::resource('expenses', ExpenseController::class);
+
+require __DIR__ . '/auth.php';
